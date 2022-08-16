@@ -37,11 +37,9 @@ function checkTime(){
     let currentDate = currentTime.getDate();
     let currentMonth = currentTime.getMonth()+1;
     let currentYear = currentTime.getFullYear();
-    let toggle = true;
 
     
     if(currentMonth != databaseMonth){
-        toggle = false;
         databaseMonth = currentMonth;
         command = `update utility_table set month = ${currentMonth}`
         postData(command, (r)=>{
@@ -65,9 +63,14 @@ function checkTime(){
             console.log("table added");
             shiftDataToTable(tableName);
         });
+        databaseDate = currentDate;
+        command = `update utility_table set date = ${currentDate}`
+        postData(command, (r)=>{
+            console.log("date updated")
+        });
 
     }
-    else if((currentDate != databaseDate) && toggle){
+    else if(currentDate != databaseDate){
         databaseDate = currentDate;
         command = `update utility_table set date = ${currentDate}`
         postData(command, (r)=>{
